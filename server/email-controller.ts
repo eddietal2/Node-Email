@@ -14,63 +14,6 @@ exports.sendMessage = (req: any, res: any) => {
   let totalTerminationsThisWeek = req.body.totalTerminationsThisWeek;
   let totalTerminationsThisMonth = req.body.totalTerminationsThisMonth;
   
-  // const req.body.testSurvey = [
-  //   {
-  //     date: "07/01",
-  //     sent: 20,
-  //     responses: 13,
-  //     categoryOneAvgScore: 4.5,
-  //     categoryTwoAvgScore: 4.5,
-  //     categoryThreeAvgScore: 4.5,
-  //     categoryFourAvgScore: 4.5,
-  //     categoryFiveAvgScore: 4,
-  //   },
-  //   {
-  //     date: "07/02",
-  //     sent: 10,
-  //     responses: 5,
-  //     categoryOneAvgScore: 4.5,
-  //     categoryTwoAvgScore: 4.5,
-  //     categoryThreeAvgScore: 4.5,
-  //     categoryFourAvgScore: 4.5,
-  //     categoryFiveAvgScore: 4,
-  //   },
-  //   {
-  //     date: "07/03",
-  //     sent: 30,
-  //     responses: 11,
-  //     categoryOneAvgScore: 4.5,
-  //     categoryTwoAvgScore: 4.5,
-  //     categoryThreeAvgScore: 4.5,
-  //     categoryFourAvgScore: 4.5,
-  //     categoryFiveAvgScore: 4,
-  //   },
-  //   {
-  //     date: "07/04",
-  //     sent: 15,
-  //     responses: 10,
-  //     categoryOneAvgScore: 4.5,
-  //     categoryTwoAvgScore: 4.5,
-  //     categoryThreeAvgScore: 4.5,
-  //     categoryFourAvgScore: 4.5,
-  //     categoryFiveAvgScore: 4,
-  //   },
-  //   {
-  //     date: "07/05",
-  //     sent: 25,
-  //     responses: 20,
-  //     categoryOneAvgScore: 4.5,
-  //     categoryTwoAvgScore: 4.5,
-  //     categoryThreeAvgScore: 4.5,
-  //     categoryFourAvgScore: 4.5,
-  //     categoryFiveAvgScore: 4,
-  //   },
-  // ];
-  
-  // Calculate the total avgScore for categoryOne
-  // Survey Responses
-  
-  
   let totalSent = 0;
   let totalResponses = 0;
   let responseRate = '';
