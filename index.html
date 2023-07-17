@@ -1,33 +1,15 @@
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="x-apple-disable-message-reformatting">
-  
-  <title></title>
-  <!--[if mso]>
-  <style>
-    table {border-collapse:collapse;border-spacing:0;border:none;margin:0;}
-    div, td {padding:0;}
-    div {margin:0 !important;}
-  </style>
-  <noscript>
-    <xml>
-      <o:OfficeDocumentSettings>
-        <o:PixelsPerInch>96</o:PixelsPerInch>
-      </o:OfficeDocumentSettings>
-    </xml>
-  </noscript>
-  <![endif]-->
-  
+  <link href="https://fonts.cdnfonts.com/css/tw-cen-mt-std" rel="stylesheet">
 </head>
-<body>
-  <style>
+<style>
+ @import url('https://fonts.cdnfonts.com/css/tw-cen-mt-std');
     body {
         margin:0;
         padding:0;
         word-spacing:normal;
+    }
+    h1,h2,h3,h4,h5 {
+      font-family: 'Tw Cen MT Std', sans-serif;
     }
     .total-day-resp::-webkit-progress-value {
      background-color: #555;
@@ -77,11 +59,13 @@
     .avg-score-wrapper {
     display: flex;
     flex-direction: row;
-    
-      
+  
     }
     article {
       flex: 1;
+    }
+    .rotate-image {
+      transform: rotate(45deg);
     }
     
     .spacer {
@@ -126,12 +110,12 @@
       <table role="presentation" style="width:94%;max-width:600px;border:none;border-spacing:0;text-align:left;font-family:Arial,sans-serif;font-size:16px;line-height:22px;color:#363636;">
         
         <tr>
-          <img src="https://www.adaptivewfs.com/wp-content/uploads/2020/07/logo-placeholder-image.png" 
-          alt="Logo" style="width:100px; max-width:80%;"></a>
-          <h1>Survey Results</h1>
+          <img src=${logoLink} 
+          alt="Logo" style="width:15.6rem; max-width:80%;"></a>
+          <h3 style="font-family: 'Tw Cen MT Std', sans-serif;">Survey Results</h3>
           <p style="font-size:1em; color: #999; margin-bottom: 2em;
           border-bottom: 1px solid #e1dfdf;
-          padding-bottom: 1em;">July 1st - 5th, 2023</p>
+          padding-bottom: 1em;">${surveyDate}</p>
         </tr>
     
         <!-- Responses -->
@@ -140,7 +124,7 @@
               <div class="spacer"></div>
               <table style="border-collapse: collapse; width: 100%;">
                 <tr>
-                  <span style="font-size: 1em; color: #999;">SENT <span style="border-radius: 5px; font-size: 0.4em; background: orange; width: 30px; height: 10px; display: inline-block;"></span></span>
+                  <span style="font-size: 1em; color: #999;">SENT <span style="border-radius: 5px; font-size: 0.4em; background: #f4940c; width: 30px; height: 10px; display: inline-block;"></span></span>
                   <span style="margin-left: 1rem; font-size: 1em; color: #999;">RESPONSES <span style="border-radius: 5px; font-size: 0.4em; background: #5D9690; width: 30px; height: 10px; display: inline-block;"></span></span>
                 </tr>
               </table>
@@ -150,16 +134,15 @@
                 <div class="resp-chart">
     
                   <!-- Edit Survey Response Chart via Quickchart -->
-                  <!-- https://quickchart.io/chart-maker/edit/zm-db8618ef-7ad9-417c-be1d-e4c9bc1507bd -->
-                  <img style="width: 100%;" src="https://quickchart.io/chart/render/sf-dd4dd787-1194-43ab-899d-72803f0e3c63
+                  <img style="width: 100%;" src="${surveyChart.getUrl()}
     
                   " alt="" srcset="">
                 </div>
     
                 <h1 class="section-header"  style="margin: 3em 0 0.5em 0; font-size: 1.2em;">Total</h1>
-                <p style="color: #999; margin: 0">Surveys Sent - 100</p>
-                <p style="color: #999; margin: 0;">Responses - 77</p>
-                <p style="color: orange; font-weight: 800; margin: 0;">Response Rate - 77%</p>
+                <p style="color: #999; margin: 0">Surveys Sent - ${totalSent}</p>
+                <p style="color: #999; margin: 0;">Responses - ${totalResponses}</p>
+                <p style="color: #f4940c; font-weight: 800; margin: 0;">Response Rate - ${responseRate}</p>
                 <div class="line"></div>
     
             </td>
@@ -167,6 +150,8 @@
             <a href="http://www.example.com/" style="text-decoration:none;"><img src="https://assets.codepen.io/210284/1200x800-2.png" width="600" alt="" style="width:100%;height:auto;display:block;border:none;text-decoration:none;color:#363636;"></a>
           </td> -->
         </tr>
+
+
         
         <!-- Average Score Per Categoy -->
         <tr>
@@ -178,62 +163,62 @@
                 <!-- https://www.amp-what.com/unicode/search/down%20arrow -->
                 <table style="border-collapse: collapse; width: 100%;">
                   <tr>
-                    <td style="padding: 10px;">
+                    <td style="padding: 10px; color: #AF357C; font-weight: 600;">
                       <article style="font-size: 1.2em; font-weight: bold; color: #AF357C;">Autonomy</article>
                     </td>
                     <td style="padding: 10px;">
                       <article style="text-align: end;">
-                        <span style="font-size: 24px;">5</span>
-                        <span style="color: green;">&#11014;</span>
-                        <span style="font-size: 10px;">+25%</span>
+                        <span style="font-size: 24px;">${avgScoreCategoryOne.toFixed(1)}</span>
+                        <img src=${catOneArrow}/>  
+                        <span style="font-size: 10px;">${catOneChange.toFixed(1)}</span>
                       </article>
                     </td>
                   </tr>
                   <tr>
-                    <td style="padding: 10px;">
+                    <td style="padding: 10px; color: #344A5C; font-weight: 600;">
                       <article style="font-size: 1.2em; font-weight: bold; color: #344A5C;">Growth</article>
                     </td>
                     <td style="padding: 10px;">
                       <article style="text-align: end;">
-                        <span style="font-size: 24px;">5</span>
-                        <span style="color: green;">&#11014;</span>
-                        <span style="font-size: 10px;">+25%</span>
+                        <span style="font-size: 24px;">${avgScoreCategoryTwo.toFixed(1)}</span>
+                        <img src=${catTwoArrow}/>
+                        <span style="font-size: 10px;">${catTwoChange.toFixed(1)}</span>
                       </article>
                     </td>
                   </tr>
                   <tr>
-                    <td style="padding: 10px;">
+                    <td style="padding: 10px; color: #5D9690; font-weight: 600;">
                       <article style="font-size: 1.2em; font-weight: bold; color: #5D9690;">Impact</article>
                     </td>
                     <td style="padding: 10px;">
                       <article style="text-align: end;">
-                        <span style="font-size: 24px;">5</span>
-                        <span style="color: green;">&#11014;</span>
-                        <span style="font-size: 10px;">+25%</span>
+                        <span style="font-size: 24px;">${avgScoreCategoryThree.toFixed(1)}</span>
+                        <img src=${catThreeArrow} />
+                        <span style="font-size: 10px;">${catThreeChange.toFixed(1)}</span>
                       </article>
                     </td>
                   </tr>
                   <tr>
-                    <td style="padding: 10px;">
+                    <td style="padding: 10px; color: #8D9B23; font-weight: 600;">
                       <article style="font-size: 1.2em; font-weight: bold; color: #8D9B23;">Connection</article>
                     </td>
                     <td style="padding: 10px;">
                       <article style="text-align: end;">
-                        <span style="font-size: 24px;">5</span>
-                        <span style="color: green;">&#11014;</span>
-                        <span style="font-size: 10px;">+25%</span>
+                        <span style="font-size: 24px;">${avgScoreCategoryFour.toFixed(1)}</span>
+                        <img src=${catFourArrow} />
+                       <span style="font-size: 10px;">${catFourChange.toFixed(1)}</span>
                       </article>
                     </td>
                   </tr>
                   <tr>
-                    <td style="padding: 10px;">
+                    <td style="padding: 10px; color: #F4940C; font-weight: 600;">
                       <article style="font-size: 1.2em; font-weight: bold; color: #F4940C;">Growth</article>
                     </td>
                     <td style="padding: 10px;">
                       <article style="text-align: end;">
-                        <span style="font-size: 24px;">5</span>
-                        <span style="color: green;">&#11014;</span>
-                        <span style="font-size: 10px;">+25%</span>
+                        <span style="font-size: 24px;">${avgScoreCategoryFive.toFixed(1)}</span>
+                        <img src=${catFiveArrow} />
+                        <span style="font-size: 10px;">${catFiveChange.toFixed(1)}</span>
                       </article>
                     </td>
                   </tr>
@@ -245,25 +230,38 @@
           </td> -->
         </tr>
     
-        <!-- Scores by Categoy -->
+        <!-- Scores by Category -->
         <tr>
           <td>
             <h1 class="section-header"  style="margin: 3em 0 0.5em 0; font-size: 1.2em;">Score by Category</h1>
             <p style="font-size: 12px;color: #999; margin-bottom: 2em;">For each day of the Week *</p>
-            
-            <!-- Edit Bar Chart via Quickchart -->
-            <!-- https://quickchart.io/chart-maker/edit/zm-cd9604b4-605e-4099-bcf6-ec676b3318ec -->
-            <!-- (3,3)
-            (3,3)
-            (3,5)
-            (3,4)
-            (3,5) -->
-            <!-- Edit Line Chart via Quickchart -->
-            <!-- https://quickchart.io/chart-maker/edit/zm-23d2747f-17f4-4d79-b174-2aba72dee0d1 -->
             <div class="line-chart">
+              <table style="border-collapse: collapse; width: 100%;">
+                <tr>
+                  <td style="text-align: center; width: 20%; font-size: 0.8em; font-weight: 700;">
+                    Autonomy
+                    <div style="background: #AF357C; width: 50px; height: 20px; margin: 0 auto; border-radius: 5px;"></div>
+                  </td>
+                  <td style="text-align: center; width: 20%; font-size: 0.8em; font-weight: 700;">
+                    Impact
+                    <div style="background: #344A5C; width: 50px; height: 20px; margin: 0 auto; border-radius: 5px;"></div>
+                  </td>
+                  <td style="text-align: center; width: 20%; font-size: 0.8em; font-weight: 700;">
+                    Growth
+                    <div style="background: #5D9690; width: 50px; height: 20px; margin: 0 auto; border-radius: 5px;"></div>
+                  </td>
+                  <td style="text-align: center; width: 20%; font-size: 0.8em; font-weight: 700;">
+                    Connection
+                    <div style="background: #8D9B23; width: 50px; height: 20px; margin: 0 auto; border-radius: 5px;"></div>
+                  </td>
+                  <td style="text-align: center; width: 20%; font-size: 0.8em; font-weight: 700;">
+                    Growth
+                    <div style="background: #F4940C; width: 50px; height: 20px; margin: 0 auto; border-radius: 5px;"></div>
+                  </td>
+                </tr>
+              </table>
               <img style="width: 100%;" 
-              src="https://quickchart.io/chart/render/sf-2052c25e-913c-4768-91ed-071b4ebfc249
-              ">
+              src="${categoryChart.getUrl()}">
             </div>
             <div class="line"></div>
           </td>
@@ -273,23 +271,23 @@
           <td>
             <h1 class="section-header"  style="margin: 3em 0 0.5em 0; font-size: 1.2em;">Employee Summary</h1>
             <div class="spacer"></div>
-            <table style="border-collapse: collapse; width: 100%;">
+            <table style="border-collapse: collapse; width: 100%;  margin-bottom: 1em;">
               <tr>
                 <td style=""><span style="color: green">Hires</span> this <i>Week</i></td>
-                <td style="text-align: end; color: green">6</td>
+                <td style="text-align: end; color: green">${totalHiresThisWeek}</td>
               </tr>
               <tr>
                 <td><span style="color: green">Hires</span> this <i>Month</i></td>
-                <td style="text-align: end; color: green;">7</td>
+                <td style="text-align: end; color: green;">${totalHiresThisMonth}</td>
               </tr>
               <div class="spacer"></div>
               <tr>
                 <td style=""><span style="color: red">Terminations</span> this <i>Week</i></td>
-                <td style="text-align: end; color: red">1</td>
+                <td style="text-align: end; color: red">${totalTerminationsThisWeek}</td>
               </tr>
               <tr>
                 <td style=""><span style="color: red">Terminations</span> this <i>Month</i></td>
-                <td style="text-align: end; color: red">2</td>
+                <td style="text-align: end; color: red">${totalTerminationsThisMonth}</td>
               </tr>
             </table>
             <div class="bottom-of-page-space"></div>
@@ -322,5 +320,3 @@
     </tr>
     </table>
   </div>
-</body>
-</html>
