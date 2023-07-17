@@ -1,5 +1,9 @@
-* Font CDN
-https://www.cdnfonts.com/tw-cen-mt-std.font
+# Steps to Successfully Send an Email from this server
+1) Make sure that you have at least NodeJS 18.12.0, and NPM 8.19.2
+2) Install npm packages in package.json (npm install)
+3) From the root folder, run (npm start). This will start our server that listens on port 3000.
+4) From POSTMAN, send a POST request over LOCALHOST (http://localhost:3000/api/email/send-email).
+5) Test API with testData.json. 
 
 * Line Chart
 [Quickchart Image](https://quickchart.io/chart/render/zm-470b78df-48f3-4210-9265-051208680c72)
