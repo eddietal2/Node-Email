@@ -1,4 +1,8 @@
 {
+    "emailList": [
+        "eddielacrosse2@gmail.com", "eddie@finalbossar.com"
+    ],
+    
     "surveyDate": "July 1st - 5th",
 
     "totalHiresThisWeek": 6,
@@ -63,8 +67,5 @@
       "categoryFourAvgScore": 4.5,
       "categoryFiveAvgScore": 1
     }
-  ],
-    "emailList": [
-        "eddielacrosse2@gmail.com", "eddie@finalbossar.com"
-    ]
+  ]
 }   
