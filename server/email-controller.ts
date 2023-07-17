@@ -3,9 +3,12 @@ console.clear();
 const nodemailer = require('nodemailer');
 const QuickChart = require('quickchart-js');
 const dotenv     = require('dotenv').config();
+const fs = require('fs');
+// Simplified HR Logo
+const logoLink = 'https://i.ibb.co/vzXSjkW/Simplified-HR-Logo-Final.png';
 
 exports.sendMessage = (req: any, res: any) => {
-  const logoLink = 'https://i.ibb.co/vzXSjkW/Simplified-HR-Logo-Final.png';
+  
   const surveyDate = req.body.surveyDate;
   
   // Hires & Fires
@@ -14,6 +17,7 @@ exports.sendMessage = (req: any, res: any) => {
   let totalTerminationsThisWeek = req.body.totalTerminationsThisWeek;
   let totalTerminationsThisMonth = req.body.totalTerminationsThisMonth;
   
+  // Surveys Sent & Responses
   let totalSent = 0;
   let totalResponses = 0;
   let responseRate = '';
@@ -38,12 +42,19 @@ exports.sendMessage = (req: any, res: any) => {
   let avgScoreCategoryThree = 0;
   let avgScoreCategoryFour = 0;
   let avgScoreCategoryFive = 0;
+
+  let catOneChange = 0;
+  let catTwoChange = 0;
+  let catThreeChange = 0;
+  let catFourChange = 0;
+  let catFiveChange = 0;
   
   let avgScoreCategoryOneLastWeek = req.body.avgScoreCategoryOneLastWeek;
   let avgScoreCategoryTwoLastWeek = req.body.avgScoreCategoryTwoLastWeek;
   let avgScoreCategoryThreeLastWeek = req.body.avgScoreCategoryThreeLastWeek;
   let avgScoreCategoryFourLastWeek = req.body.avgScoreCategoryFourLastWeek;
   let avgScoreCategoryFiveLastWeek = req.body.avgScoreCategoryFiveLastWeek;
+  
   function calculateAvgScores() {
     // 
     for (const survey of req.body.testSurvey) {
@@ -54,13 +65,6 @@ exports.sendMessage = (req: any, res: any) => {
       avgScoreCategoryFive += (survey.categoryFiveAvgScore) / 5;
     }
   }
-  
-  // Comparing grom the previous week
-  let catOneChange = 0;
-  let catTwoChange = 0;
-  let catThreeChange = 0;
-  let catFourChange = 0;
-  let catFiveChange = 0;
   function calculatePercentageChanges() {
     catOneChange = (((avgScoreCategoryOneLastWeek - avgScoreCategoryOne) / avgScoreCategoryOne) * 100);
     catTwoChange = (((avgScoreCategoryTwoLastWeek - avgScoreCategoryTwo) / avgScoreCategoryTwo) * 100)
@@ -89,6 +93,7 @@ exports.sendMessage = (req: any, res: any) => {
     console.log("Total avgScore for Last Week (Growth):", avgScoreCategoryFiveLastWeek, "\n");
   }
 
+  // QuickChart Line & Horizontal Bar Graph
   let surveyChart = new QuickChart();
   function createSurveyChart() {
   
@@ -821,7 +826,6 @@ exports.sendMessage = (req: any, res: any) => {
 
     // Autonomy
     if(catOneChange > 0) {
-      console.log(catOneChange)
       catOneArrow = percentArrows.catOneUp;
     } else {
       catOneArrow = percentArrows.catOneDown;
@@ -851,6 +855,7 @@ exports.sendMessage = (req: any, res: any) => {
       catFiveArrow = percentArrows.catFiveDown;
     }
   }
+  
   calculateSurveyResponses();
   calculateAvgScores();
   calculatePercentageChanges();
@@ -859,107 +864,60 @@ exports.sendMessage = (req: any, res: any) => {
   calculateAvgScorePercentChange();
 
   const html = `
-    <style>
-    @import url('https://fonts.cdnfonts.com/css/tw-cen-mt-std');
-        body {
-            margin:0;
-            padding:0;
-            word-spacing:normal;
-        }
-        h1,h2,h3,h4,h5 {
-          font-family: 'Tw Cen MT Std', sans-serif;
-        }
-        .total-day-resp::-webkit-progress-value {
-        background-color: #555;
-        }
-        .total-day-sub::-webkit-progress-value {
-        background-color: green;
-        }
-        tbody {
-            background: #fff;
-        }
-        td {
-            padding:30px;
-            background-color:#ffffff;
-        }
-        .resp-chart {
-            /* background: #999;  */
-            width: 100%; 
-            height: auto; 
-            margin: 0.3em auto;
-        }
-        .line-chart {
-            /* background: #999;  */
-            width: 100%; 
-            height: auto; 
-            margin: 0.3em auto;
-        }
-        table, td, div, h1, p {
-          font-family: Arial, sans-serif;
-          margin: 0;
-          padding: 0;
-        }
-        .line {
-            margin-top: 2em;
-            border-bottom: 1px solid #e4e4e4;
-        }
-        .section-header {
-            margin-top: 1.5rem;
-            font-family: 'Tw Cen MT Std', sans-serif;
-            font-size: 26px;
-            line-height: 32px;
-            font-weight: bold;
-            letter-spacing: -0.02em;
-            font-size: 1.3em;
-            color: #777;
-        }
-        
-        /* Average Score */
-        .avg-score-wrapper {
-        display: flex;
-        flex-direction: row;
-      
-        }
-        article {
-          flex: 1;
-        }
-        .rotate-image {
-          transform: rotate(45deg);
-        }
-        
-        .spacer {
-          margin: 1em 0;
-        }
-        .bottom-of-page-space {
-          margin-bottom: 10em;
-        }
-        @media screen and (max-width: 530px) {
-          .unsub {
-            display: block;
-            padding: 8px;
-            margin-top: 14px;
-            border-radius: 6px;
-            background-color: #555555;
-            text-decoration: none !important;
-            font-weight: bold;
-          }
-          .col-lge {
-            max-width: 100% !important;
-          }
-        }
-        @media screen and (min-width: 531px) {
-          .col-sml {
-            max-width: 27% !important;
-          }
-          .col-lge {
-            max-width: 73% !important;
-          }
-        }
-      </style>
-      <div role="article" aria-roledescription="email" lang="en" style="text-size-adjust:100%;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;background-color:#939297;">
-        <table role="presentation" style="width:100%;border:none;border-spacing:0;">
-        <tr>
-        <td align="center" style="padding:0; background: #fff;">
+  <style>
+  body {
+      margin:0;
+      padding:0;
+      word-spacing:normal;
+  }
+  p,h1,h2,h3,h4,h5 {
+    font-family: 'Corbel', sans-serif;
+  }
+  tbody, td {
+      background: #fff;
+  }
+  table, td {
+    margin: 0;
+    padding: 0;
+  }
+  .resp-chart {
+      /* background: #999;  */
+      width: 100%; 
+      height: auto; 
+      margin: 0.3em auto;
+  }
+  .line-chart {
+      /* background: #999;  */
+      width: 100%; 
+      height: auto; 
+      margin: 0.3em auto;
+  }
+  .line {
+      margin-top: 2em;
+      border-bottom: 1px solid #e4e4e4;
+  }
+  .section-header {
+      margin-top: 1.5rem;
+      font-family: 'Tw Cen MT Std', sans-serif;
+      font-size: 26px;
+      line-height: 32px;
+      font-weight: bold;
+      letter-spacing: -0.02em;
+      font-size: 1.3em;
+      color: #777;
+  }
+  
+  .spacer {
+    margin: 1em 0;
+  }
+  .bottom-of-page-space {
+    margin-bottom: 10em;
+  }
+</style>
+<div role="article" aria-roledescription="email" lang="en" style="text-size-adjust:100%;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;background-color:#939297;">
+  <table role="presentation" style="width:100%;border:none;border-spacing:0;">
+    <tr>
+      <td align="center" style="padding:0; background: #fff;">
           <!--[if mso]>
           <table role="presentation" align="center" style="width:600px;">
           <tr>
@@ -971,51 +929,16 @@ exports.sendMessage = (req: any, res: any) => {
             <tr>
               <img src=${logoLink} 
               alt="Logo" style="width:15.6rem; max-width:80%;"></a>
-              <h3 style="font-family: 'Tw Cen MT Std', sans-serif;">Survey Results</h3>
+              <h3>Survey Results</h3>
               <p style="font-size:1em; color: #999; margin-bottom: 2em;
               border-bottom: 1px solid #e1dfdf;
               padding-bottom: 1em;">${surveyDate}</p>
             </tr>
-        
-            <!-- Responses -->
-            <tr>
-                <td>
-                  <div class="spacer"></div>
-                  <table style="border-collapse: collapse; width: 100%;">
-                    <tr>
-                      <span style="font-size: 1em; color: #999;">SENT <span style="border-radius: 5px; font-size: 0.4em; background: #f4940c; width: 30px; height: 10px; display: inline-block;"></span></span>
-                      <span style="margin-left: 1rem; font-size: 1em; color: #999;">RESPONSES <span style="border-radius: 5px; font-size: 0.4em; background: #5D9690; width: 30px; height: 10px; display: inline-block;"></span></span>
-                    </tr>
-                  </table>
-                  
-        
-                    <div class="spacer"></div>
-                    <div class="resp-chart">
-        
-                      <!-- Edit Survey Response Chart via Quickchart -->
-                      <img style="width: 100%;" src="${surveyChart.getUrl()}
-        
-                      " alt="" srcset="">
-                    </div>
-        
-                    <h1 class="section-header"  style="margin: 3em 0 0.5em 0; font-size: 1.2em;">Total</h1>
-                    <p style="color: #999; margin: 0">Surveys Sent - ${totalSent}</p>
-                    <p style="color: #999; margin: 0;">Responses - ${totalResponses}</p>
-                    <p style="color: #f4940c; font-weight: 800; margin: 0;">Response Rate - ${responseRate}</p>
-                    <div class="line"></div>
-        
-                </td>
-              <!-- <td style="padding:0;font-size:24px;line-height:28px;font-weight:bold;">
-                <a href="http://www.example.com/" style="text-decoration:none;"><img src="https://assets.codepen.io/210284/1200x800-2.png" width="600" alt="" style="width:100%;height:auto;display:block;border:none;text-decoration:none;color:#363636;"></a>
-              </td> -->
-            </tr>
 
-
-            
             <!-- Average Score Per Categoy -->
             <tr>
                 <td>
-                    <h1 class="section-header"  style="margin: 3em 0 0.5em 0; font-size: 1.2em;">Average Score per Category</h1>
+                    <h1 class="section-header"  style="font-family: 'Tw Cen Mt Std', sans-serif; font-size: 1.2em;">Average Score per Category</h1>
                     <p style="font-size: 12px;color: #999; margin-bottom: 2em;">Compared to last week *</p>
                     <div class="spacer"></div>
                     <!-- Unicode Icons -->
@@ -1095,7 +1018,7 @@ exports.sendMessage = (req: any, res: any) => {
                 <h1 class="section-header"  style="margin: 3em 0 0.5em 0; font-size: 1.2em;">Score by Category</h1>
                 <p style="font-size: 12px;color: #999; margin-bottom: 2em;">For each day of the Week *</p>
                 <div class="line-chart">
-                  <table style="border-collapse: collapse; width: 100%;">
+                  <table style="border-collapse: collapse; width: 100%; margin-bottom: 2em;">
                     <tr>
                       <td style="text-align: center; width: 20%; font-size: 0.8em; font-weight: 700;">
                         Autonomy
@@ -1124,6 +1047,40 @@ exports.sendMessage = (req: any, res: any) => {
                 </div>
                 <div class="line"></div>
               </td>
+            </tr>
+
+            <!-- Responses -->
+            <tr>
+                <td>
+                <h1 class="section-header"  style="margin: 3em 0 0.5em 0; font-size: 1.2em;">Survey Responses</h1>
+                  <div class="spacer"></div>
+                  <table style="border-collapse: collapse; width: 100%;">
+                    <tr>
+                      <span style="font-size: 1em; color: #999;">SENT <span style="border-radius: 5px; font-size: 0.4em; background: #f4940c; width: 30px; height: 10px; display: inline-block;"></span></span>
+                      <span style="margin-left: 1rem; font-size: 1em; color: #999;">RESPONSES <span style="border-radius: 5px; font-size: 0.4em; background: #5D9690; width: 30px; height: 10px; display: inline-block;"></span></span>
+                    </tr>
+                  </table>
+                  
+        
+                    <div class="spacer"></div>
+                    <div class="resp-chart">
+        
+                      <!-- Edit Survey Response Chart via Quickchart -->
+                      <img style="width: 100%;" src="${surveyChart.getUrl()}
+        
+                      " alt="" srcset="">
+                    </div>
+        
+                    <h1 class="section-header"  style="margin: 3em 0 0.5em 0; font-size: 1.2em;">Total</h1>
+                    <p style="color: #999; margin: 0">Surveys Sent - ${totalSent}</p>
+                    <p style="color: #999; margin: 0;">Responses - ${totalResponses}</p>
+                    <p style="color: #f4940c; font-weight: 800; margin: 0;">Response Rate - ${responseRate}</p>
+                    <div class="line"></div>
+        
+                </td>
+              <!-- <td style="padding:0;font-size:24px;line-height:28px;font-weight:bold;">
+                <a href="http://www.example.com/" style="text-decoration:none;"><img src="https://assets.codepen.io/210284/1200x800-2.png" width="600" alt="" style="width:100%;height:auto;display:block;border:none;text-decoration:none;color:#363636;"></a>
+              </td> -->
             </tr>
         
             <tr>
@@ -1175,12 +1132,12 @@ exports.sendMessage = (req: any, res: any) => {
           </tr>
           </table>
           <![endif]-->
-        </td>
-        </tr>
-        </table>
-      </div>
-      `
-
+      </td>
+    </tr>
+  </table>
+</div>
+  `
+  
   // Set transport service which will send the emails
   var transporter =  nodemailer.createTransport({
     service: 'hotmail',
@@ -1188,18 +1145,18 @@ exports.sendMessage = (req: any, res: any) => {
           user: 'admin@finalbossar.com',
           pass: process.env.PASS,
       },
-      debug: true, // show debug output
-      logger: true // log information in console
-    });
+      debug: false, // show debug output
+      logger: false // log information in console
+  });
 
-    //  configuration for email details
-    const userMailOptions = {
+  // Configuration for email details
+  const userMailOptions = {
       from: 'eddie@finalbossar.com', // sender address
-      to: ['eddielacrosse2@gmail.com', 'eddie@finalbossar.com'], // list of receivers
+      to: req.body.emailList, // list of receivers
       subject: `Survey Email (Test)`,
       html: html,
-    };
-    transporter.sendMail(userMailOptions, function (err: any, info: any) {
+  };
+  transporter.sendMail(userMailOptions, function (err: any, info: any) {
       if(err) {
         // console.log(err)
         return res.status(400).json(err);
@@ -1208,7 +1165,7 @@ exports.sendMessage = (req: any, res: any) => {
         // console.log(info);
         return res.status(200).json(info)
       }
-    });
+  });
 
   
 }

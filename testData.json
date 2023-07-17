@@ -19,7 +19,7 @@
       "responses": 13,
       "categoryOneAvgScore": 1,
       "categoryTwoAvgScore": 2,
-      "categoryThreeAvgScore": 4.5,
+      "categoryThreeAvgScore": 4,
       "categoryFourAvgScore": 4.5,
       "categoryFiveAvgScore": 4
     },
@@ -28,9 +28,9 @@
       "sent": 10,
       "responses": 5,
       "categoryOneAvgScore": 2,
-      "categoryTwoAvgScore": 4.5,
+      "categoryTwoAvgScore": 4.2,
       "categoryThreeAvgScore": 4.5,
-      "categoryFourAvgScore": 4.5,
+      "categoryFourAvgScore": 3,
       "categoryFiveAvgScore": 4
     },
     {
@@ -40,7 +40,7 @@
       "categoryOneAvgScore": 4.5,
       "categoryTwoAvgScore": 4.5,
       "categoryThreeAvgScore": 4.5,
-      "categoryFourAvgScore": 4.5,
+      "categoryFourAvgScore": 3,
       "categoryFiveAvgScore": 4
     },
     {
@@ -59,9 +59,12 @@
       "responses": 20,
       "categoryOneAvgScore": 1,
       "categoryTwoAvgScore": 4.5,
-      "categoryThreeAvgScore": 4.5,
+      "categoryThreeAvgScore": 4,
       "categoryFourAvgScore": 4.5,
       "categoryFiveAvgScore": 1
     }
-  ]
+  ],
+    "emailList": [
+        "eddielacrosse2@gmail.com", "eddie@finalbossar.com"
+    ]
 }   
